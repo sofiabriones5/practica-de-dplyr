@@ -58,16 +58,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="practica-ployer_files/libs/clipboard/clipboard.min.js"></script>
-<script src="practica-ployer_files/libs/quarto-html/quarto.js"></script>
-<script src="practica-ployer_files/libs/quarto-html/popper.min.js"></script>
-<script src="practica-ployer_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="practica-ployer_files/libs/quarto-html/anchor.min.js"></script>
-<link href="practica-ployer_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="practica-ployer_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="practica-ployer_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="practica-ployer_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="practica-ployer_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/quarto.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="index_files/libs/quarto-html/anchor.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="index_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -80,7 +80,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#select" id="toc-select" class="nav-link active" data-scroll-target="#select">select()</a></li>
+  <li><a href="#select" id="toc-select" class="nav-link active" data-scroll-target="#select">select()</a>
+  <ul class="collapse">
+  <li><a href="#ejemplo-1" id="toc-ejemplo-1" class="nav-link" data-scroll-target="#ejemplo-1">Ejemplo 1</a></li>
+  </ul></li>
+  <li><a href="#peso-promedio-por-especie-de-pinguinos" id="toc-peso-promedio-por-especie-de-pinguinos" class="nav-link" data-scroll-target="#peso-promedio-por-especie-de-pinguinos">Peso promedio por especie de pinguinos</a>
+  <ul class="collapse">
+  <li><a href="#ejemplo-2" id="toc-ejemplo-2" class="nav-link" data-scroll-target="#ejemplo-2">Ejemplo 2</a></li>
+  <li><a href="#ejemplo-3" id="toc-ejemplo-3" class="nav-link" data-scroll-target="#ejemplo-3">Ejemplo 3</a></li>
+  <li><a href="#ejemplo-4" id="toc-ejemplo-4" class="nav-link" data-scroll-target="#ejemplo-4">Ejemplo 4</a></li>
+  <li><a href="#ejemplo-5" id="toc-ejemplo-5" class="nav-link" data-scroll-target="#ejemplo-5">Ejemplo 5</a></li>
+  </ul></li>
   </ul>
 </nav>
 </div>
@@ -10243,6 +10253,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </div>
 </div>
+<p>#arrange()</p>
+<section id="ejemplo-1" class="level2">
+<h2 class="anchored" data-anchor-id="ejemplo-1">Ejemplo 1</h2>
+<p>{r} #| label: summarize-01</p>
+</section>
+</section>
+<section id="peso-promedio-por-especie-de-pinguinos" class="level1">
+<h1>Peso promedio por especie de pinguinos</h1>
+<p>penguins |&gt; group_by(species) |&gt; summarize( body_mass_g_mean = mean(body_mass_g, na.rm = TRUE), body_mass_g_max = max(body_mass_g, na.rm = TRUE), body_mass_g_min = min(body_mass_g, na.rm = TRUE), cantidad_pinguinos = n() ) |&gt; kable()</p>
+<p>{r} #| label: aggregate-01</p>
+<p>aggregate( body_mass_g ~ species, data = penguins, FUN = mean )</p>
+<section id="ejemplo-2" class="level2">
+<h2 class="anchored" data-anchor-id="ejemplo-2">Ejemplo 2</h2>
+<p>{r} #| label: summarize-02</p>
+<p>delitos_2023 |&gt; filter(Delito == “HOMICIDIO”) |&gt; group_by(Provincia, Canton, Distrito) |&gt; summarize( homicidios_2023 = n() ) |&gt; arrange(desc(homicidios_2023)) |&gt; kable()</p>
+</section>
+<section id="ejemplo-3" class="level2">
+<h2 class="anchored" data-anchor-id="ejemplo-3">Ejemplo 3</h2>
+<p>{r} #| label: summarize-03</p>
+<p>delitos_2023 |&gt; filter(Delito == “HOMICIDIO”) |&gt; group_by(Genero) |&gt; summarize(n = n()) |&gt; kable()</p>
+</section>
+<section id="ejemplo-4" class="level2">
+<h2 class="anchored" data-anchor-id="ejemplo-4">Ejemplo 4</h2>
+<p>{r} #| label: summarize-04</p>
+<p>delitos_2023 |&gt; filter(Delito == “HOMICIDIO”) |&gt; group_by(Nacionalidad) |&gt; summarize(n = n()) |&gt; arrange(desc(n)) |&gt; kable()</p>
+</section>
+<section id="ejemplo-5" class="level2">
+<h2 class="anchored" data-anchor-id="ejemplo-5">Ejemplo 5</h2>
+<p>{r} #| label: summarize-05</p>
+<p>penguins |&gt; summarise(body_mass_g_mean = mean(body_mass_g, na.rm = TRUE), n = n()) |&gt; kable()</p>
+</section>
 </section>
 
 </main>

@@ -108,4 +108,89 @@ select( Delito, SubDelito, Victima, SubVictima, Canton, Distrito) |>
   filter((Distrito == "SAN PEDRO" & Canton == "MONTES DE OCA") & 
            (Delito == "ASALTO" | Delito == "HOMICIDIO"))|>
    kable()
-``` 
+```   
+
+
+
+
+
+
+#arrange()
+
+## Ejemplo 1
+
+{r}
+#| label: summarize-01
+
+# Peso promedio por especie de pinguinos
+
+penguins |> 
+  group_by(species) |>
+  summarize(
+    body_mass_g_mean = mean(body_mass_g, na.rm = TRUE),
+    body_mass_g_max = max(body_mass_g, na.rm = TRUE),
+    body_mass_g_min = min(body_mass_g, na.rm = TRUE), 
+    cantidad_pinguinos = n()
+    ) |>
+  kable()
+
+ 
+{r}
+#| label: aggregate-01
+
+aggregate(
+  body_mass_g ~ species, 
+  data = penguins,
+  FUN = mean
+)
+
+
+## Ejemplo 2
+
+{r}
+#| label: summarize-02
+
+delitos_2023 |>
+  filter(Delito == "HOMICIDIO") |>
+  group_by(Provincia, Canton, Distrito) |>
+  summarize(
+    homicidios_2023 = n()
+  ) |>
+  arrange(desc(homicidios_2023)) |>
+  kable()
+
+
+## Ejemplo 3
+
+{r}
+#| label: summarize-03
+
+delitos_2023 |> 
+  filter(Delito == "HOMICIDIO") |>
+group_by(Genero) |> 
+  summarize(n = n()) |>
+  kable()
+
+
+## Ejemplo 4
+
+{r}
+#| label: summarize-04
+
+delitos_2023 |> 
+  filter(Delito == "HOMICIDIO") |>
+group_by(Nacionalidad) |> 
+  summarize(n = n()) |>
+  arrange(desc(n)) |>
+  kable()
+
+
+## Ejemplo 5
+
+{r}
+#| label: summarize-05
+
+penguins |>
+  summarise(body_mass_g_mean = mean(body_mass_g, na.rm = TRUE),
+            n = n()) |>
+  kable()
